@@ -1,0 +1,66 @@
+<script src="<%= cssJSUrl %>/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script> 
+<script src="<%= cssJSUrl %>/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="<%= cssJSUrl %>/assets/plugins/selectdropdown/dist/js/bootstrap-select.min.js" type="text/javascript"></script>
+
+<link href="<%= cssJSUrl %>/assets/plugins/selectdropdown/dist/css/bootstrap-select.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN THEME STYLES -->
+<link href="<%= cssJSUrl %>/assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="<%= cssJSUrl %>/assets/css/pages/login-soft.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/css/custom.css" rel="stylesheet" type="text/css"/>
+
+<link rel="shortcut icon" type="image/x-icon" href="<%= cssJSUrl %>/assets/fav.png"/>
+
+<script src="<%= cssJSUrl %>/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="<%= cssJSUrl %>/js/jsFunctions.js" type="text/javascript"></script> 
+<script src="<%= cssJSUrl %>/js/common.js" type="text/javascript"></script> 
+<!--script src="js/validate_functions.js" type="text/javascript"></script-->
+<!-- END THEME STYLES -->
+
+<script src="<%= cssJSUrl %>/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script> 
+<script src="<%= cssJSUrl %>/assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script> 
+<script src="<%= cssJSUrl %>/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script> 
+<script src="<%= cssJSUrl %>/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script> 
+<script src="<%= cssJSUrl %>/assets/plugins/jquery.cokie.min.js" type="text/javascript"></script> 
+<script src="<%= cssJSUrl %>/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script> 
+<!-- END CORE PLUGINS --> 
+
+<!-- BEGIN PAGE LEVEL PLUGIN STYLES --> <!--------------from manage page start------------------>
+<link href="<%= cssJSUrl %>/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
+<link href="<%= cssJSUrl %>/assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
+
+<!-- BEGIN PAGE HEADER-->
+<script src="<%= cssJSUrl %>/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script> 
+<script src="<%= cssJSUrl %>/assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script> 
+<script src="<%= cssJSUrl %>/assets/scripts/core/app.js"></script> 
+<script src="<%= cssJSUrl %>/assets/scripts/custom/search.js"></script> 
+
+<!-- BEGIN PAGE LEVEL PLUGINS --> 
+<script src="<%= cssJSUrl %>/assets/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script> 
+<!-- END PAGE LEVEL PLUGINS --> 
+<script type="text/javascript">
+jQuery(document).ready(function() {    
+  App.init();
+  Search.init();
+});
+
+</script>
+<!--------------from manage page end------------------>
+<script type="text/javascript">
+$(window).bind("pageshow", function(event) {
+    if (event.originalEvent.persisted) {
+        window.location.reload() 
+    }
+});
+</script>

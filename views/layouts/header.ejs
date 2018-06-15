@@ -1,0 +1,102 @@
+<% //currentUser.email %>
+<style type="text/css">
+    .msg_notification { background: url("../frontend/images/icon-sheet01.png") no-repeat scroll 0px -40px rgba(0, 0, 0, 0); float: left; height: 40px; left: 3px; padding: 0; top: -10px; position: relative; width: 38px; display: none; }
+
+</style>
+<header id="header">
+    <div class="inner">
+        <div class="col-2 col-sm-1 col-md-1">
+<% if(currentUser && currentUser.username!=undefined){ %>
+        <a href="/" class="logo"><img src="/frontend/images/logo.png"><!-- <strong><%= SITE_NAME %></strong> --></a>
+    <% } else{ %>
+        <a href="/" class="logo"><!-- <strong><%= SITE_NAME %></strong> --><img src="/frontend/images/logo.png"></a>
+    <%} %>
+</div>
+        <nav id="nav">
+           <nav id="nav1">
+
+           <% if(currentUser && currentUser.username!=undefined){ %>
+                <a href="/">Home</a>
+            <% } else{ %>
+                <a href="/">Home</a>
+            <% } %>
+
+
+
+               
+                <% if (currentUser && currentUser.username!=undefined){ %>
+                    <!--a href="/users/getmessage">My Box</a-->
+
+                 <a href="/messages/inbox">My Box</a>
+                    <span>
+                        <a class="msg_notification" id="count_message" style="display:none;" onclick="show_message_notification();"></a>
+                    </span>
+                    <!-- <a href="/users/my_profile" class="f-nav-name"><%= currentUser.first_name %></a> --> 
+                   
+                  
+                   <!--  <a href="/users/setting">Settings</a> -->
+                     <a href="/friends/search">Find Friends</a> 
+                     <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div> 
+                    <!-- <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Setting<span class="caret"></span></a>
+                        <ul class="dropdown-menu setting-width">
+                            <li class="dropdown-item"><a href="/users/updateprofile">Edit Profile</a></li>
+                            <li class="dropdown-item"><a href="/users/changepass">Change Password</a></li>
+                            <li class="dropdown-item"><a href="/users/movable_prop">Your Movable Property Details</a></li>
+                            <li class="dropdown-item"><a href="/users/immovable_prop">Your Immovable Property Details</a></li>
+                            <li class="dropdown-item"><a href="/users/deactivate_account" onclick="return archive_fun('User');">Deactivate Account</a></li>
+                        </ul>
+                    </div> -->
+
+                 <a href="/users/aboutus">About Us</a>
+
+                <a href="/users/contactus">Contact Us</a>
+                    <a href="/users/logout">Logout</a>
+                    <a href="/users/my_profile" class="f-nav-name"><%= currentUser.first_name %></a> 
+
+                <% }else{ %>
+                    <a href="/users/aboutus">About Us</a>
+                    <a href="/users/contactus">Contact Us</a>
+                    <a href="/users/login">Login</a>
+                    <a href="/users/register">Register</a>
+                <% } %>
+           </nav>
+        </nav>
+        <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+    </div>
+</header>
+<script type="text/javascript">
+$(document).ready(function(){
+    messageNotificationCount();
+});
+function messageNotificationCount()
+{
+   $.ajax({
+        type:'GET',
+        url: "/messages/messageNotificationCount",
+        data: '',
+        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        
+        success: function(response){
+            
+            if(response.messageCount > 0){
+                $('#count_message').show();
+                $('#count_message').html(response.messageCount);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log('Error: ' + error.message);
+        }
+    });
+    setTimeout("messageNotificationCount()",1000); 
+}
+</script>

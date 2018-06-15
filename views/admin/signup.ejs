@@ -1,0 +1,74 @@
+<!-- BEGIN LOGO -->
+<div class="logo"> <a href="login"> <img src="../images/logo.png" alt="pic" width="29%;"/> </a> </div>
+<!-- END LOGO --> 
+<!-- BEGIN LOGIN -->
+
+<div class="content" style="position:relative;"> 
+	<!--div style="position:absolute; float:left;left:30px; top:70px" id="message">
+		<% if(typeof err != "undefined" && err==0){%> 
+		<font color='red'><%= message %></font>
+		<% }else if(typeof err != "undefined" && err==1){%> 
+		<font color='green'><%= message %></font> 
+		<% } %>	
+	</div-->
+  <!-- BEGIN LOGIN FORM -->
+  <form name="login" action="" method="post"  class="register-form" style="display:block;">
+    <h3 class="form-title">Login to your account</h3>
+    <% if(typeof err != "undefined" && err==0){%>
+		<div class="alert alert-success display-show">
+		  <button class="close" data-close="alert"></button>
+		  <span><%= message %></span> 
+		</div>
+	<% }else if(typeof err != "undefined" && err==1){%>
+		<div class="alert alert-danger display-show">
+		  <button class="close" data-close="alert"></button>
+		  <span><%= message %></span> 
+		</div>
+	<% } %>		 
+    
+    <div class="form-group"> 
+      <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+      <label class="control-label visible-ie8 visible-ie9">Username</label>
+      <div class="input-icon"> <i class="fa fa-user"></i>
+        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" value="abdul"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label visible-ie8 visible-ie9">Email</label>
+      <div class="input-icon"> <i class="fa fa-lock"></i>
+        <input class="form-control placeholder-no-fix" type="email" autocomplete="off" placeholder="Email" name="email" value="testing.soft011@gmail.com"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label visible-ie8 visible-ie9">Password</label>
+      <div class="input-icon"> <i class="fa fa-lock"></i>
+        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" value="12345678"/>
+      </div>
+    </div>
+    <input type="hidden" name="role_id" id="role_id" value="1">
+    <input type="hidden" name="status" id="status" value="1">
+    <div class="form-actions">
+      <button type="submit" class="btn blue pull-right"> Login <i class="m-icon-swapright m-icon-white"></i> </button>
+    </div>
+    <!--<div class="forget-password">
+      <h4>Forgot your password ?</h4>
+      <p> no worries, click <a href="javascript:;" id="forget-password"> here </a> to reset your password. </p>
+    </div>-->
+  </form>
+  <!-- END LOGIN FORM --> 
+</div>
+<!-- END LOGIN --> 
+<!-- BEGIN COPYRIGHT -->
+<div class="copyright"> © Copyright <%= (new Date()).getFullYear() %>  <%= SITE_NAME %>.  All Rights Reserved. </div>
+<div class="copyright" style="float:right;margin-top:78px;">
+    <a target="_blank" href="https://www.softprodigy.com/">
+    <img src="../images/logo.png" alt="https://www.softprodigy.com/"/>
+    </a>
+</div>
+<!-- END COPYRIGHT -->
+<script type="text/javascript">
+	jQuery(document).ready(function() {     
+	  Login.init();
+	});
+</script>
+

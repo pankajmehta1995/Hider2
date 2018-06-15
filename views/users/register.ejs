@@ -1,0 +1,334 @@
+<%  var $gender=['Male','Female','Other'];  %>
+<%// $gender.length; %>
+<%//  resultset.length%>
+
+
+     <div class="login-page">
+          <div>    
+              <div class="login-field">
+
+                      <div class="login-details reg-details" style="height: auto;">
+                           <h1>Register</h1>
+                         
+                              <div id="message" style="margin:-20px 0 10px 0; width:100%;">
+                                <font color='green'> <%= messages.successmsg; %> </font> 
+                                <font color='red'> <%= messages.errormsg; %> </font> 
+                              </div>
+
+                            <form class="form-detail" name="register" id="register" method = "post" action = "">
+                              <div class="row">
+                                <div class="col-md-6">
+                                   <div class="form-group">
+                                     <input type="text" name="first_name" id="first_name" placeholder="First Name" class="inp-detail form-control" 
+                                     <%if(users!=0) {%>
+                                      value="<%= users.first_name; %>" 
+                                     <%}%> >                                   
+                                   </div>
+                                </div>
+                                  <div class="col-md-6">
+                                   	<div class="form-group">
+                                    <input type="text" name="last_name" id="last_name" placeholder="Last Name" class="inp-detail form-control" 
+                                      <%if(users!=0) {%>
+                                        value="<%= users.last_name; %>" 
+                                     <%}%> >
+                                   </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <input type="text" name="username" id="username" placeholder="User Name" class="inp-detail form-control" 
+                                     <%if(users!=0) {%>
+                                        value="<%= users.username; %>" 
+                                     <%}%> >
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <input type="text" name="email" id="email" placeholder="Email" class="inp-detail form-control"
+                                     <%if(users!=0) {%>
+                                        value="<%= users.email; %>" 
+                                     <%}%> >
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-md-6">
+                                	<div class="form-group back-dp">
+                                		<select class="selectpicker gender-reg form-control" id="gender" name="gender" value="Gender" name="gender">
+                                              <% 
+                                              var i=0;
+                                              for (i=0;i<$gender.length;i++){
+                                                if($gender[i]== resultset['gender']){
+                                                  var Selected="selected";
+                                                }
+                                                else{
+                                                  var Selected="";
+                                                }
+                                              %>
+                                                <option value="<%=  $gender[i]  %>" <%= Selected; %>>
+                                                  <%=  $gender[i]  %>    
+                                                </option>
+                                              <% } %>  
+                                                
+                                            </select>
+                                            <!-- <i class="fas fa-caret-down dropdown-icon"></i>  -->
+                                	
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    	<div class="form-group">
+                                        <input type="text" class="datepicker inp-detail form-control " name="date_of_birth" id="date_of_birth" placeholder="Birthday" 
+  
+                                        <%if(users!=0) {%>
+                                            value="" 
+                                          <%}%>
+
+                                          <%if(users!=0) {%>
+                                            value="<%= users.date_of_birth; %>" 
+                                          <%}%>
+                                         />
+                                    	</div>
+                                  </div>
+                                </div>
+
+                               	<div class="row">
+                               	 <div class="col-md-6 codecountry">
+                                  <div class="form-group back-dp ">
+                                    <select class="selectpicker cou-select inp-detail form-control" data-style="btn-info" name="country_code" id="country_code">
+                                       <!--  <optgroup label="Select Table"> -->
+                                        <option  value=""><b><span style="position: fixed;">Select Country Code</span></b></option>
+                                        <% for(var i=0;i< resultset.length;i++){%>
+                                          <option  value="<%= resultset[i].code %>"><%= resultset[i].code +' '+resultset[i].name;  %></option>
+                                        <% }%> 
+
+                                    </select>
+                                  </div>
+                                </div>
+                                 <div class="col-md-6">
+                                   <div class="form-group">
+                                     <input type="text" name="phone" id="phone" placeholder="Phone" class="inp-detail form-control" 
+                                     <%if(users) {%>
+                                      value="<%= users.phone; %>"  
+                                     <%}%> 
+                                     />
+
+                                   </div>
+                                 </div>
+                                </div>
+
+                             <div class="row">
+                              <div class="col-md-12">
+                               <div class="form-group">
+                                <input type="password" name="pass_confirmation" id="pass_confirmation" data-validation="required" class="inp-detail form-control" placeholder="Password">
+                              </div>
+                             </div>
+                            </div>
+                             <div class="row">
+                             	<div class="col-md-12">
+                                 <div class="form-group">  
+                                  <input name="pass" type="password" id="pass" data-validation="required confirmation" class="inp-detail form-control" placeholder="Confirm Password">
+                                 </div> 
+                              </div>
+                              </div> 
+                              <div class="form-group">
+                                   <input type="submit" value="Register">
+                              </div>
+                              <div class="form-group">
+                                <a href="/users/login">Already have an account please Login.</a>
+                              </div>  
+                            </form>
+                      </div>
+                    </div>
+                
+              </div>
+            </div>
+         
+     
+ 
+
+    <script type="text/javascript">
+      $( "#date_of_birth" ).datepicker({ 
+      dateFormat: 'dd-M-yy',
+      maxDate:0
+      });
+    </script>
+
+        
+      <script type="text/javascript">
+       $(document).ready(function(){
+
+          jQuery.validator.addMethod("fname", function(value, element) {
+            // allow any non-whitespace characters as the host part
+            // return this.optional( element ) || /^[ A-Za-z./#&+-]*$/.test( value );
+            return this.optional(element) || /^[a-zA-Z,.'-]+$/i.test(value);
+          }, "Only characters and ,.'- special characters are allowed.");
+
+        // jQuery.validator.addMethod("specialChrs", function (element, value) {
+        //     return new RegExp("^[a-zA-Z]+$").test(value)
+        // }, "Special Characters not permitted");
+         jQuery.validator.addMethod("lname", function(value, element) {
+            // allow any non-whitespace characters as the host part
+            // return this.optional( element ) || /^[ A-Za-z./#&+-]*$/.test( value );
+            return this.optional(element) || /^[a-zA-Z,.'-]+$/i.test(value);
+          }, "Only characters and periods (,.'-) are allowed.");
+
+         jQuery.validator.addMethod("email1", function(value, element) {
+            // allow any non-whitespace characters as the host part
+            // return this.optional( element ) || /^[ A-Za-z./#&+-]*$/.test( value );
+            return this.optional(element) || /^[a-zA-Z0-9.@]+$/i.test(value);
+          }, "Only characters, numbers and periods (.) are allowed.");
+
+ 
+          
+         $("#register").validate({
+           
+           errorElement: 'span', //default input error message container
+           errorClass: 'help-block', // default input error message class
+           focusInvalid: false, // do not focus the last invalid input
+           ignore: [],
+           debug: true,
+           rules: {
+             first_name: {
+               required:true,
+               minlength: 3,
+               // lettersonly: true
+               maxlength: 20,
+               fname: true
+
+             },
+             last_name: {
+               required: true,
+               minlength: 3,
+               maxlength: 20,
+               //lettersonly: true
+               lname: true
+             },
+             username: {
+                required: true,
+                // minlength: 3,
+                // maxlength: 12
+                rangelength: [3, 12]
+             },
+             email: {
+               required: true,
+               email1:true
+             },
+              date_of_birth: {
+               required: true
+             },
+
+             country_code: {
+               required: true
+             },
+             phone: {
+               required: true,
+               digits: true,
+               rangelength: [9, 12]
+
+             },             
+             pass_confirmation: {
+               required: true,
+               minlength: 5
+             },
+             pass: {
+               required: true,
+
+               equalTo : "#pass_confirmation"
+             }
+           },
+            messages: {
+             first_name: {
+               required: "First Name cannot be blank.",
+               minlength: "First Name should have minimum of 3 inputs",
+               lettersonly: "Only character input is possible"
+               
+             },
+             last_name: {
+               required: "Last Name cannot be blank.",
+               minlength: "Last Name should have minimum of 3 inputs",
+              // lettersonly: "Only character input is possible",
+               digits: "Only character input is possible"
+               
+             },
+             username: {
+               required: "Username cannot be blank.",
+               // minlength: "User Name should have minimum of 3 inputs",
+               // maxlength: "User Name can have maximum of 12 inputs"
+               rangelength: "User name has to be an alphanumeric value (3-12 chars)"
+
+             },
+             email: { 
+               required: "Email id cannot be blank",
+               email: "You have not given a correct e-mail address"
+               
+             },
+              date_of_birth: { 
+               required: "Date of Birth cannot be blank"          
+             },
+             country_code: { 
+               required: "Country calling code cannot be blank"          
+             },
+
+              phone: { 
+               required: "Phone number cannot be blank.",
+               digits: "Phone Number can have only numeric inputs",
+               rangelength: "Phone number has to be a numeric value (9-12 digits)"           
+
+             },
+             pass_confirmation: {
+               required: "Password cannot be blank.",
+               minlength: "Password should be 5 digits long"  
+
+             },
+             pass: {
+               required: "Confirm password cannot be blank.",
+               equalTo: "Confirm password must be same as Password."
+
+             }
+           },
+           invalidHandler: function (event, validator) { //display error alert on form submit  
+             $('.alert-danger', $('#register')).show();
+           },      highlight: function (element) { // hightlight error inputs
+             $(element)
+               .closest('.form-group').addClass('has-error'); // set error class to the control group
+           },      success: function (label) {
+             label.closest('.form-group').removeClass('has-error');
+             label.remove();
+           },      errorPlacement: function (error, element) {
+             error.insertAfter(element.closest('.form-control'));
+           },      submitHandler: function (form) {
+             form.submit();
+           }
+         });
+       });
+    </script> 
+
+
+     <script type="text/javascript">
+            
+(window).on('load resize', function() {
+    var domHeight = $(window).innerHeight();
+    $('.video-container').css('height', domHeight + 'px');
+});
+          </script>
+          <style>
+            
+.video-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.video-container video{
+  width: auto !important;
+    height: auto;
+    min-height: 100%;
+    min-width: 100%;
+}
+          </style>
+   
+  </body>
+</html>

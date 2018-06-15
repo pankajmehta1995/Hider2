@@ -1,0 +1,54 @@
+<!-- Three -->
+<div class="login-page">
+ <div class="container-fluid">
+	    <div class="login-field">   
+           <div class="row">
+  	          <div class="col-md-12">
+  		        <div class="login-details">
+  			      <h1>Forgot Password</h1>
+	  			    <div id="message"  style="margin:-20px 0 10px 0; width:100%;">
+				       <font color='green'> <%= messages.successmsg; %> </font> 
+			  			<font color='red'> <%= messages.errormsg; %> </font> 
+				       
+				    </div>
+  			         <form class="form-detail" method = "post" action="">
+  			  	        <div class="form-group">
+  				              <input type="password" name="password" placeholder="Enter New Password" class="inp-detail" value="" data-validation="required">
+                    </div>      
+                    <div class="form-group">
+                        <input type="password" name="passwordd" placeholder="Confirm Password" class="inp-detail" value="" data-validation="required">
+                    </div> 
+
+                     <div class="form-group">
+                      <input type="submit" value="Submit" />
+                     </div>             
+  			          </form>
+  			
+  			           
+  		          </div>
+  	         </div>
+          </div>
+       </div>
+    </div>
+</div>
+
+			
+<script>
+  $.validate({
+    modules : 'location, date, security, file',
+    onModulesLoaded : function() {
+      $('#country').suggestCountry();
+    }
+  });
+
+  $.validate({
+  borderColorOnError : '#FFF',
+  addValidClassOnAll : true
+});
+
+  // Restrict presentation length
+  $('#presentation').restrictLength( $('#pres-max-length') );
+
+</script>
+		
+			

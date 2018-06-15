@@ -1,0 +1,199 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+  <div class="col-md-12"> 
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title"> Update Profile </h3>
+    <ul class="page-breadcrumb breadcrumb">
+      <li> <i class="fa fa-home"></i> <a href="dashboard"> Home </a> <i class="fa fa-angle-right"></i> </li>
+      <li> <a href="javascript:void(0);"> Update Profile </a> </li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB--> 
+  </div>
+</div>
+<% var userdata = JSON.parse(userdata); %>
+
+
+<!-- END PAGE HEADER--> 
+<!-- BEGIN PAGE CONTENT--> 
+<!-- BEGIN PAGE CONTENT-->
+<div class="row profile">
+  <div class="col-md-12"> 
+    <!--BEGIN TABS-->
+    <div class="tabbable tabbable-custom tabbable-full-width">
+      <ul class="nav nav-tabs">
+        <li class="active"> <a href="#tab_1_1" data-toggle="tab"> Update Profile </a> </li>
+      </ul>
+       
+        
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1_1">
+          <div class="row">
+            <div class="col-md-9">
+              <div class="row"> 
+                
+                <!--end col-md-8--> 
+                
+                <!--end col-md-4--> 
+              </div>
+              <!--end row-->
+              
+              <div class="tab-pane active" >
+				  <br clear="all"/>
+				 <div  id="message" style="margin-top: -25px; margin-left: 269px; position:absolute;">
+					<% if(typeof err != "undefined" && err==0){%>
+						<font color='green'><%= message %></font> 
+					<% }else if(typeof err != "undefined" && err==1){%>
+						<font color='red'><%= message %></font> 
+					<% } %>		 
+				</div>
+
+                <form name="myform" id="myform" class="myform" action="" method="post">
+                  <div class="form-group flare">
+                    <label class="control-label col-md-4">User Name <span class="required"> * </span></label>
+                    <div class="col-md-5 input">
+                      <input name="username" id="username" value="<%= userdata.username %>" type="text" readonly="readonly" disabled="disabled" class="form-control" >
+                    </div>
+                  </div>
+                  <div class="form-group flare">
+                    <label class="control-label col-md-4">First Name <span class="required"> * </span></label>
+                    <div class="col-md-5 input">
+                      <input type="text" autocomplete="off" id="first_name" class="form-control" name="first_name" value="<%= (userdata.first_name!='' ? userdata.first_name : 'N/A') %>">
+                    </div>
+                  </div>
+                  <div class="form-group flare">
+                    <label class="control-label col-md-4">Last Name <span class="required"> * </span></label>
+                    <div class="col-md-5 input">
+                      <input type="text" autocomplete="off" id="last_name" class="form-control" name="last_name" value="<%= (userdata.last_name!='' ? userdata.last_name : 'N/A') %>">
+                    </div>
+                  </div>
+                  <div class="form-group flare">
+                    <label class="control-label col-md-4">Email <span class="required"> * </span></label>
+                    <div class="col-md-5 input">
+                      <input type="text" autocomplete="off" id="email" class="form-control" name="email" readonly="readonly" value="<%= userdata.email %>">
+                    </div>
+                  </div>
+                  <div class="form-group flare">
+                    <label class="control-label col-md-4">Gender <span class="required"> * </span></label>
+                    <div class="col-md-5 input">
+                      <input type="text" autocomplete="off" id="gender" class="form-control" name="gender"  value="<%= userdata.gender %>">
+                    </div>
+                  </div>
+                  
+                  
+                  <div class="form-group flare">
+                    <label class="control-label col-md-4">Date of birth <span class="required"> * </span></label>
+                    <div class="col-md-5 input">
+                      <input type="text" autocomplete="off" id="date_of_birth" class="form-control" name="date_of_birth"  value="<%= userdata.date_of_birth %>">
+                    </div>
+                  </div>
+                  <div class="form-group flare">
+                    <label class="control-label col-md-4">Phone <span class="required"> * </span></label>
+                    <div class="col-md-5 input">
+                      <input type="text" autocomplete="off" id="phone" class="form-control" name="phone"  value="<%= (userdata.phone!='' ? userdata.phone : 'N/A') %>">
+                    </div>
+                  </div>
+                  
+                  <br clear="all"/>
+                  <br clear="all"/>
+                  <div class="form-group">
+                    <label class="control-label col-md-4">&nbsp; </label>
+                    <div class="col-md-8">
+                      <input type="submit" value="Save" class="btn theme-btn voilet green pull-left" >
+                      <a href="dashboard"  class="btn blue pull-left margd">Cancel</a> </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--tab_1_2--> 
+      
+    </div>
+  </div>
+  
+  <!--END TABS--> 
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#myform").validate({
+			errorElement: 'span', //default input error message container
+			errorClass: 'help-block', // default input error message class
+			focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				username: {
+					required: true
+				},
+				first_name: {
+					required: true
+				},
+				last_name: {
+					required: true
+				},
+				email: {
+					required: true
+				},
+				gender: {
+					required: true
+				},
+				date_of_birth: {
+					required: true
+				},
+				phone: {
+					required: true
+				}
+			},
+			 messages: {
+				username: {
+					required: "Username is required."
+				},
+				first_name: {
+					required: "First Name is required."
+				},
+				last_name: {
+					required: "Last name is required."
+				},
+				email: {
+					required: "email is required."
+				},
+				gender: {
+					required: "Gender is required."
+				},
+				date_of_birth: {
+					required: "Date of birth is required."
+				},
+				phone: {
+					required: "Phone is required."
+				},
+			},
+			invalidHandler: function (event, validator) { //display error alert on form submit   
+				$('.alert-danger', $('#myform')).show();
+			},
+
+			highlight: function (element) { // hightlight error inputs
+				$(element)
+					.closest('.input').addClass('has-error'); // set error class to the control group
+			},
+
+			success: function (label) {
+				label.closest('.input').removeClass('has-error');
+				label.remove();
+			},
+
+			errorPlacement: function (error, element) {
+				error.insertAfter(element.closest('.form-control'));
+			},
+
+			submitHandler: function (form) {
+				form.submit();
+			}
+		});	
+	});
+	//var validator = $( "#myform" ).validate({
+		//~ errorElement: 'span', //default input error message container
+	    //~ errorClass: 'help-block', // default input error message class
+	    //~ focusInvalid: false, // do not focus the last invalid input
+	//~ });
+	//~ validator.form();
+
+</script>

@@ -1,0 +1,78 @@
+<!-- Three -->
+<div class="login-page same-page">
+ <div class="container-fluid">
+      <div class="login-field">   
+           <div class="row">
+              <div class="col-md-12">
+              <div class="login-details">
+              <h1>Change Password</h1>
+              <div id="message"  style="margin:-20px 0 10px 0; width:100%;">
+               <font color='green'> <%= messages.successmsg; %> </font> 
+              <font color='red'> <%= messages.errormsg; %> </font> 
+               
+            </div>
+                 <form name="change_password" id="change_password" class="form-detail" method = "post" action="">
+                    <div class="form-group">
+                      <input type="password" name="pass" id="pass" placeholder="Enter your password" class="inp-detail form-control" value="" >
+                    </div>
+                   <div class="form-group">
+                      <input type="password" name="newpass" id="newpass" placeholder="Enter new password" class="inp-detail form-control" value="" >
+                    </div>                     
+                  <div class="form-group">
+                  <input type="submit" value="submit" />
+                </div>
+
+                  </form>
+        
+                   
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+</div>
+
+   <script type="text/javascript">
+       $(document).ready(function(){
+         $("#change_password").validate({
+           
+           errorElement: 'span', //default input error message container
+           errorClass: 'help-block', // default input error message class
+           focusInvalid: false, // do not focus the last invalid input
+           ignore: [],
+           debug: true,
+           rules: {
+
+             pass: {
+              required:true
+             },
+              newpass: {
+               required:true
+             }
+           },
+            messages: {
+              pass: {
+               required:"Please enter your password"
+             },
+
+              newpass: {
+               required:"Please enter your new password"
+             }
+
+           },
+           invalidHandler: function (event, validator) { //display error alert on form submit  
+             $('.alert-danger', $('#change_password')).show();
+           },      highlight: function (element) { // hightlight error inputs
+             $(element)
+               .closest('.form-group').addClass('has-error'); // set error class to the control group
+           },      success: function (label) {
+             label.closest('.form-group').removeClass('has-error');
+             label.remove();
+           },      errorPlacement: function (error, element) {
+             error.insertAfter(element.closest('.form-control'));
+           },      submitHandler: function (form) {
+             form.submit();
+           }
+         });
+       });
+    </script>     

@@ -1,0 +1,126 @@
+<% // resultset.length %>
+<%  // typeof filter %>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<div role="main">
+<!--27-04--><section class="banner_area-search">
+                  <div class="container">
+                    <div class="banner_content-search">
+                      <h3 title="About us"><img class="left-img" src="/frontend/images/left-heartline.png" alt="">Search<img class="right-img" src="/frontend/images/right-heartline.png" alt=""></h3>
+              
+
+	        <section id="p-search">
+					<div class="search1-page">
+						<div class="search-page">
+							<div class="col-md-12">
+								<form id="search" name="search" action="/friends/search" method="get">
+									<div class="form-group">
+										<input type="text" id="search-field" placeholder="Search" name="search" id="search" class=" form-control invalid-search">
+										<input type="hidden" id="search-suggestion">
+										<input type="submit" class="search-btn" value="SEARCH" />
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="profile-search">
+						<div class="container">
+						 <div class="row">
+
+							<% if(resultset.length==0 && typeof filter!='undefined' ){%>
+							<div>No record found</div>
+							<% }else{%>
+							<% for(var i=0; i < resultset.length; i++){ %>	
+							<% if(resultset[i]['blocked_me'].length==0){ %>
+								<div class="col-sm-4 col-6 col-md-3 col-lg-2 col-xs-6">
+									<div class="pro-search">
+										
+											<% if(resultset[i]['profile_image']=='' || resultset[i]['profile_image']==null){ %>
+												<a href="/friends/view?user_id=<%= resultset[i]['id'] %>"><img src="/user_images/members-4.jpg" align="right" class="pro-img"></a>
+											<% }else{ %>
+												<a href="/friends/view?user_id=<%= resultset[i]['id'] %>"><img src="/user_images/<%= resultset[i]['profile_image'] %>" align="right" class="pro-img"></a>
+											<% } %>
+										
+											
+										
+								    </div>
+								    <div class="name-search"><h4><%= resultset[i]['first_name']+' '+resultset[i]['last_name'];%></h4>
+								    </div>
+								</div>    
+								<% } %>
+								<% } %>
+								<% } %>
+							  </div>
+							</div>
+						</div>
+	
+	            </section>
+                
+                 </div>
+            </div>
+      </section>
+
+
+
+      <script type="text/javascript">
+       $(document).ready(function(){
+         $("#search").validate({
+           
+           errorElement: 'span', //default input error message container
+           errorClass: 'help-block', // default input error message class
+           focusInvalid: false, // do not focus the last invalid input
+           ignore: [],
+           debug: true,
+           rules: {
+             search: {
+               required:true,
+             },
+
+           },
+            messages: {
+             search: {
+               required: "Please enter your's friend name",
+              
+             }
+           },
+           invalidHandler: function (event, validator) { //display error alert on form submit  
+             $('.alert-danger', $('#login')).show();
+           },      highlight: function (element) { // hightlight error inputs
+             $(element)
+               .closest('.form-group').addClass('has-error'); // set error class to the control group
+           },      success: function (label) {
+             label.closest('.form-group').removeClass('has-error');
+             label.remove();
+           },      errorPlacement: function (error, element) {
+             error.insertAfter(element.closest('.form-control'));
+           },      submitHandler: function (form) {
+             form.submit();
+           }
+         });
+       });
+
+       //autocomplete search
+		$(function() {
+		     $( "#search-field" ).autocomplete({
+		         //console.log("hey");
+		       source: "/friends/autoComplete",
+		       minLength: 2,
+		       select:function(event,ui){
+		         $("#search").val(ui.item.label);
+		       return false;
+		           },
+		       open: function() {
+		         $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+		       },
+		       close: function() {
+		         $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+		       } ,
+		       select: function (event, ui) {ui.item.value} });
+		     $("#search-suggestion").data("ui-autocomplete")._renderItem = function (ul, item) {
+		         console.log(item.img);
+		   return $('<li/>', {'data-value': item.label}).append($('<a/>', {href: "#"})
+		           .append($('<img/>', {src: item.img, alt: item.label})).append(item.label))
+		           .appendTo(ul);
+		    };
+		});
+    </script> 

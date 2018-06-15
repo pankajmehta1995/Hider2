@@ -1,0 +1,341 @@
+<%  var $gender=['Male','Female','Other'];  %>
+<%// $gender.length; %>
+
+<div role="main">
+     <div class="profile-edit">
+     <form name="frm" id="frm" action="/users/updateprofile" enctype="multipart/form-data" method="post">
+     <section class="banner_area1 profile-background">  
+           <div class="<%= (resultset['login_status']==1 ? 'my-img1' : '') %>">
+              <% if(resultset['cover_image']=='' || resultset['cover_image']==null){ %>
+              <img src="/frontend/images/profileback.jpg" class="img-back" id="blah2">
+              <% }else{%>
+              <img class="img" src="/user_cover_images/<%= resultset['cover_image'] %>" id="blah2" alt="" style="width:100%;">
+              <% }%>
+            </div> 
+            <div class="profiles-inside">
+                <div>
+                    <div class="profile-content">
+                        <div class="<%= (resultset['login_status']==1 ? 'my-img' : '') %>">
+                          <% if(resultset['profile_image']=='' || resultset['profile_image']==null){ %>
+                            <img class="img-circle" id="blah" src="/frontend/images/my-pic.jpg" alt="" style="padding: 10px;">
+                            <% }else{%>
+                             <img class="img-circle" id="blah" src="/user_images/<%= resultset['profile_image'] %>" alt="" style="padding: 10px;">
+                            <% }%>
+                        </div>
+                        <div class="left-side-bttn">
+                          <ul class="up-edit-bttn">
+                            <li>
+                              <input type="file" name="file" id="file" class="form-control">
+                              <span class="edit-bttn">Edit Profile Pic</span>
+                            </li>
+                          </ul>
+                        </div> 
+                        <div class="right-side-content">
+
+                             <ul class="first-btn">
+                              
+                              <li>
+                                  <input type="file" name="bfile" id="bfile" class="form-control">
+                                  <span class="edit-bttn">Edit Background</span>
+                              </li>
+                             
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section class="mypro-section2">
+
+            <div class="main-profile edit">
+             <div class="container">
+              <div class="white-back">
+                <div class="row">
+                    <div id="message"  class="pro-up-flash">
+                        <font color='green'> <%= messages.successmsg; %> </font> 
+                        <font color='red'> <%= messages.errormsg; %> </font>    
+                    </div>
+                       <div class="col-lg-12 col-md-12">
+                            <div class="user-info">
+                                <ul class="content-user-info">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12 form-group" >
+                                                <input type="text" name="first_name" id="first_name" placeholder="First Name" value="<%= resultset['first_name'] %>" class="form-control"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12 form-group">
+                                                <input type="text" name="last_name"  id="last_name placeholder="Last Name" value="<%= resultset['last_name'] %>" class="form-control" />
+                                            </div>
+                                        </div>    
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12 form-group">
+                                                <input type="tel" name="phone" id="phone" placeholder="Phone Number" value="<%= resultset['phone'] %>" readonly class="form-control" />
+                                            </div>
+                                            <div class="col-lg-6 col-md-12">
+                                                <input type="email" name="email" id="email" placeholder="Email" value="<%= resultset['email'] %>" readonly />
+                                            </div>
+                                        </div>    
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12 form-group">
+                                            <select class="selectpicker gender-select form-control" name="gender">
+                                              <% 
+                                              var i=0;
+                                              for (i=0;i<$gender.length;i++){
+                                                if($gender[i]== resultset['gender']){
+                                                  var Selected="selected";
+                                                }
+                                                else{
+                                                  var Selected="";
+                                                }
+                                              %>
+                                                <option value="<%=  $gender[i]  %>" <%= Selected; %>>
+                                                  <%=  $gender[i]  %>    
+                                                </option>
+                                              <% } %>  
+                                                
+                                            </select>
+                                            <i></i> 
+
+                                          </div>
+                                            <div class="col-lg-6 col-md-12 form-group">
+                                               <input type="text" class="datepicker form-control" name="date_of_birth" id="date_of_birth" placeholder="Birthday" 
+                                               value="<%= (resultset['date_of_birth']==null || resultset['date_of_birth']=='') ? "N/A": moment(resultset['date_of_birth']).format('DD-MMM-YYYY')  %>"
+                                              />
+                                            </div>
+                                          </div>    
+                                    </li>
+                                   
+                                    
+                                </ul>
+                            </div>
+                            <ul class="first-btn">
+                                <li><button type="submit" value="Submit" id="submit_button">Save</button></li>
+                            <li><a href="/users/my_profile">Back</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+     </form>  
+    
+</div>
+</div>
+   
+
+   
+
+
+     <script type="text/javascript">
+      $( "#date_of_birth" ).datepicker({ 
+      dateFormat: 'dd-M-yy',
+      maxDate:0
+      });
+    </script>
+
+
+
+<script>
+
+  $("#file").change(function() {
+    var input =this;
+    var validExtensions = ['jpg','png','jpeg'];
+    //console.log(input.split('.').pop());
+    var file_name=input.files[0].name;
+
+    var size = Math.floor(input.files[0].size/1000);
+   
+    var ext_array=file_name.split('.');
+    var extension = ext_array[ext_array.length - 1]
+
+    // if (input.files && input.files[0]) {
+      if ($.inArray(extension, validExtensions) == -1){
+        // error message will be display here.
+        //$("#submit_button").prop("disabled", true); 
+        $('#file').val(''); 
+        $('#file').after('<span style="display: block;" class="help-block">Only image type jpg/png/jpeg is allowed</span>');
+      }
+      else if(size < 100){
+       //$("#submit_button").prop("disabled", true); 
+       $('#file').val('');
+       $('#file').after('<span style="display: block;" class="help-block">File size should be greater than 100KB</span>');
+        // error message will be display here.
+      }  
+
+    /*  else if ($.inArray(extension, validExtensions) == -1){
+        // error message will be display here.
+        $("#submit_button").prop("disabled", true); 
+        $('#file').after('<span style="display: block;" class="help-block">Only image type jpg/png/jpeg is allowed</span>');
+      }
+ 
+    */ 
+      else{
+        //$("#submit_button").prop("disabled", false);           
+        if(input.files && input.files[0] && $.inArray(extension, validExtensions)!= -1){
+         
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        } 
+      }  
+  });
+
+  $("#bfile").change(function() {
+    var input =this;
+    var validExtensions = ['jpg','png','jpeg'];
+    var file_name=input.files[0].name;
+
+    var size = Math.floor(input.files[0].size/1000);
+
+   
+    var ext_array=file_name.split('.');
+    var extension = ext_array[ext_array.length - 1]
+
+    if ($.inArray(extension, validExtensions) == -1){
+        // error message will be display here.
+      //$("#submit_button").prop("disabled", true); 
+      $('#bfile').val('');
+      $('#bfile').after('<span style="display: block;" class="help-block">Only image type jpg/png/jpeg is allowed</span>');
+    }
+
+    else if(size < 100){
+       //$("#submit_button").prop("disabled", true); 
+       $('#bfile').val('');
+       $('#bfile').after('<span style="display: block;" class="help-block"></span>');
+        // error message will be display here.
+    } 
+    /* else if ($.inArray(extension, validExtensions) == -1){
+        // error message will be display here.
+      $("#submit_button").prop("disabled", true); 
+      $('#bfile').after('<span style="display: block;" class="help-block">Only image type jpg/png/jpeg is allowed</span>');
+    }  */
+
+    else{
+      //$("#submit_button").prop("disabled", false); 
+      if(input.files && input.files[0] && $.inArray(extension, validExtensions)!= -1){
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('#blah2').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }  
+  });
+
+</script>
+
+
+
+      
+      <script type="text/javascript">
+       $(document).ready(function(){
+
+/*
+       $.validator.addMethod('filesize', function (value, element, param) {
+        return this.optional(element) || (element.files[0].size <= param) && (element.files[0].size > 200000)
+       }, 'File size must be less than {0}');
+
+
+      $.validator.addMethod('filesizeb', function (value, element, param) {
+        return this.optional(element) || (element.files[0].size <= param) && (element.files[0].size > 1000000)
+       }, 'File size must be less than {0}');
+*/
+
+         $("#frm").validate({
+           
+           errorElement: 'span', //default input error message container
+           errorClass: 'help-block', // default input error message class
+           focusInvalid: false, // do not focus the last invalid input
+           ignore: [],
+           debug: true,
+           rules: {
+
+             file: {
+              required:false,
+          /*  extension: "jpg|png|jpeg",
+              filesize: 300000  */
+             },
+              bfile: {
+                required:false,
+            /*  extension: "jpg|png|jpeg",
+                filesizeb: 8000000  */
+             },
+             first_name: {
+               required:true,
+               minlength: 3,
+               lettersonly: true
+               
+             },
+             last_name: {
+               required: true,
+               minlength: 3,
+               lettersonly: true 
+             },
+
+             phone: {
+               required: true,
+               digits: true
+             },             
+             date_of_birth: {
+               required: true,               
+             }
+
+           },
+            messages: {
+              file: {
+                extension:"Only image type jpg/png/jpeg is allowed",
+                filesize:"File size should be between 200KB to 300KB"
+             },
+             bfile: {
+               extension:"Only image type jpg/png/jpeg is allowed",
+               filesizeb:"File size should be between 500KB to 600KB"  
+             },
+             first_name: {
+               required: "Please enter your First Name",
+               minlength: "First Name should have minimum of 3 inputs",
+               lettersonly: "Only character input is possible"
+               
+             },
+             last_name: {
+               required: "Please enter your Last Name",
+               minlength: "Last Name should have minimum of 3 inputs",
+               lettersonly: "Only character input is possible"
+               
+             },
+
+              phone: { 
+               required: "Please enter your phone number",
+               digits: "Phone Number can have only numeric inputs"          
+
+             },
+             date_of_birth: {
+               required: "Please enter your date of birth"
+             
+             }
+
+           },
+           invalidHandler: function (event, validator) { //display error alert on form submit  
+             $('.alert-danger', $('#frm')).show();
+           },      highlight: function (element) { // hightlight error inputs
+             $(element)
+               .closest('.form-group').addClass('has-error'); // set error class to the control group
+           },      success: function (label) {
+             label.closest('.form-group').removeClass('has-error');
+             label.remove();
+           },      errorPlacement: function (error, element) {
+             error.insertAfter(element.closest('.form-control'));
+           },      submitHandler: function (form) {
+             form.submit();
+           }
+         });
+       });
+    </script> 

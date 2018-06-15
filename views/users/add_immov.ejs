@@ -1,0 +1,171 @@
+<%  var $type=['Residential Property','Commercial Property'];  %>
+
+<div role="main">
+     <div class="profile-edit">
+     <form name="immov" id="immov" action="/users/add_immova" method="post">
+  <!--27-04--><section class="banner_area">
+              <div class="layer">
+                    <div class="container">
+                     <div class="banner_content">
+                      <h3 title="About us"><img class="left-img" src="/frontend/images/left-heartline.png" alt="">Immovable Property<img class="right-img" src="/frontend/images/right-heartline.png" alt=""></h3>
+                    </div>
+                 </div>
+             </div>
+        </section>
+            
+
+         <section class="mypro-section2 mov-prop-form">
+
+            <div class="main-profile edit">
+             <div class="container">
+              <div class="white-back">
+                <div class="row">
+                    <div id="message"  style="margin:-50px 0px 50px 370px; width:100%;">
+                        <font color='green'> <%= messages.successmsg; %> </font> 
+                        <font color='red'> <%= messages.errormsg; %> </font>    
+                    </div>
+                       <div class="col-lg-12 col-md-12">
+                            <div class="user-info immovable-info">
+                                <ul class="content-user-info">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12 form-group" >
+                                                <input type="text" name="address" id="address" placeholder=" Address" class="form-control"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-12 form-group">
+                                               <select class="selectpicker type-reg form-control" id="type" name="type" value="type" name="type">
+                                                <option  value=""><b><span style="position: fixed;">Select Property Type</span></b></option>
+                                                <% 
+                                                  var i=0;
+                                                  for (i=0;i<$type.length;i++){
+
+                                                      var Selected="";
+
+                                                %>
+                                                  <option value="<%=  $type[i]  %>" <%= Selected; %>>
+                                                    <%=  $type[i]  %>    
+                                                  </option>
+                                                <% } %>  
+                                               </select>
+                                            </div>
+                                        </div>    
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12 form-group">
+                                              <select class="selectpicker cou-select inp-detail form-control" data-style="btn-info" name="country_code" id="country_code">
+                                                 <!--  <optgroup label="Select Table"> -->
+                                                  <option  value=""><b><span style="position: fixed;">Select Country Code</span></b></option>
+                                                  <% for(var i=0;i< resultset.length;i++){%>
+                                                    <option  value="<%= resultset[i].code %>"><%= resultset[i].code +' '+resultset[i].name;  %></option>
+                                                  <% }%> 
+
+                                              </select>
+                                            </div>
+
+                                        </div>    
+                                    </li>
+                                    <li>
+ 
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                            <ul class="first-btn">
+                                <li><button type="submit" value="Submit" id="submit_button">Save</button></li>
+                            <li><a href="/users/immovable_prop">Back</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+     </form>  
+     <!--div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown link
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="/users/vehicledetails_show">Vehicle Detail</a>
+    <a class="dropdown-item" href="/users/propertydetails_show">Property Detail</a> 
+  </div>
+</div-->
+</div>
+</div>
+   
+
+    <!--  <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Click Here</button>
+        <ul class="dropdown-menu">
+          <li><a href="/users/vehicledetails_show">Vehicle Detail</a></li>
+          <li><a href="/users/propertydetails_show">Property Detail</a></li>
+
+        </ul>
+      </div>
+ -->
+
+
+     <script type="text/javascript">
+          $(document).ready(function(){
+
+          jQuery.validator.addMethod("add", function(value, element) {
+            // allow any non-whitespace characters as the host part
+            // return this.optional( element ) || /^[ A-Za-z./#&+-]*$/.test( value );
+            return this.optional(element) || /^[a-zA-Z0-9-/# ]+$/i.test(value);
+          }, "Characters, Numbers and periods(-/#) allowed");
+
+
+         $("#immov").validate({
+
+           errorElement: 'span', //default input error message container
+           errorClass: 'help-block', // default input error message class
+           focusInvalid: false, // do not focus the last invalid input
+           ignore: [],
+           debug: true,
+           rules: {
+
+             address: {
+               required:true,
+               add:true
+
+             },
+             type: {
+               required: true,
+             },
+
+             country_code: {
+               required: true,
+             }
+           },
+            messages: {
+              address: {
+                required: "Address can not be empty",
+             },
+             type: {
+                required: "Vehicle Type can not be empty", 
+             },
+
+             country_code: {
+                required: "Country can not be empty",
+             }
+
+           },
+           invalidHandler: function (event, validator) { //display error alert on form submit  
+             $('.alert-danger', $('#frm')).show();
+           },      highlight: function (element) { // hightlight error inputs
+             $(element)
+               .closest('.form-group').addClass('has-error'); // set error class to the control group
+           },      success: function (label) {
+             label.closest('.form-group').removeClass('has-error');
+             label.remove();
+           },      errorPlacement: function (error, element) {
+             error.insertAfter(element.closest('.form-control'));
+           },      submitHandler: function (form) {
+             form.submit();
+           }
+         });
+});
+
+    </script> 

@@ -1,0 +1,147 @@
+<div role="main">
+  <!--27-04--><section class="banner_area">
+			      <div class="layer">
+                   <div class="container">
+                    <div class="banner_content">
+                      <h3 title="About us"><img class="left-img" src="/frontend/images/left-heartline.png" alt="">Contact us<img class="right-img" src="/frontend/images/right-heartline.png" alt=""></h3>
+                    </div>
+                  </div>
+              </div>
+        </section>
+
+			<div class="container-fluid">
+				<div class="contact-field">
+					<div class="col-md-12">
+						<div class="contact-details">
+							<h1><b>Get in <span>Touch</span> with us<b></h1>
+								<img src="/frontend/images/red-line.png" style="margin-bottom:30px;">
+							<div id="message"  style="margin:-20px 0 10px 0; width:100%;">
+						       <font color='green'> <%= messages.successmsg; %> </font> 
+					  			<font color='red'> <%= messages.errormsg; %> </font>
+					  		</div>	
+							 <form name="contact_us" id="contact_us" class="contact-detail" method = "post" action="">
+								<div class="contact-group">
+									<input type="text" name="name" id="name" placeholder="Name" class="inp-detail form-control" >
+								</div>
+
+								<div class="contact-group">
+									<input type="text" name="phone" id="phone" placeholder="Phone Number" class="inp-detail form-control" >
+								</div>
+								  
+                <div class="contact-group">          
+                  <select class="inp-detail form-control" id="subject" name="subject">
+                      <!-- <option value="">----Please Select Subject----</option>   -->
+                      <% for(var i=0;i< resultset.length;i++){%>
+                      <option value="<%= resultset[i].subject %>"><%= resultset[i].subject %></option>
+                      <% }%> 
+                 </select>
+                 <span class="dd-icon"></span>
+              </div>  
+
+								<div class="contact-group">
+									<input type="text" name="email" id="email" placeholder="Email" class="inp-detail form-control">
+								</div>
+
+								<div class="contact-group">
+								   <textarea class="inp-detail form-control " name= "message" id="mess" rows="5" placeholder="Message"></textarea>
+								</div>
+								<div class="contact-group">
+								  <input type="submit" value="Send">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+	</div>
+
+<script type="text/javascript">
+       $(document).ready(function(){
+        jQuery.validator.addMethod("lname", function(value, element) {
+          // allow any non-whitespace characters as the host part
+          // return this.optional( element ) || /^[ A-Za-z./#&+-]*$/.test( value );
+          return this.optional(element) || /^[a-zA-Z ,.'-]+$/i.test(value);
+        }, "Only characters and periods (,.'-) are allowed.");
+
+        jQuery.validator.addMethod("email1", function(value, element) {
+            // allow any non-whitespace characters as the host part
+            // return this.optional( element ) || /^[ A-Za-z./#&+-]*$/.test( value );
+            return this.optional(element) || /^[a-zA-Z0-9.]+$/i.test(value);
+        }, "Only characters, numbers and periods (.) are allowed.");
+       $("#contact_us").validate({
+           
+           errorElement: 'span', //default input error message container
+           errorClass: 'help-block', // default input error message class
+           focusInvalid: false, // do not focus the last invalid input
+           ignore: [],
+           debug: true,
+           rules: {
+             name: {
+               required:true,
+               minlength: 3,
+               // lettersonly: true  
+               lname: true
+             },
+            
+             email: {
+               required: true,
+               email1:true
+             },
+             phone: {
+               required: true,
+               digits: true,
+               rangelength: [9, 12]
+             },   
+              subject: {
+              required: true
+             },
+             message: {
+             	required: true
+             }          
+            
+
+           },
+            messages: {
+             name: {
+               required: "Please enter your First Name",
+               minlength: "First Name should have minimum of 3 inputs",
+               lettersonly: "Only character input is possible"
+               
+             },
+            
+             email: { 
+               required: "Please enter your email ",
+               email: "You have not given a correct e-mail address"
+               
+             },
+              phone: { 
+               required: "Please enter your phone number",
+               digits: "Phone Number can have only numeric inputs",
+               rangelength: "Phone number has to be a numeric value (9-12 digits)"               
+
+             },
+             subject: {
+               required: "Please enter password",
+             },
+             message: {
+               required: "Message cannot be blank",
+             }
+             
+           },
+           invalidHandler: function (event, validator) { //display error alert on form submit  
+             $('.alert-danger', $('#login')).show();
+           },      highlight: function (element) { // hightlight error inputs
+             $(element)
+               .closest('.form-group').addClass('has-error'); // set error class to the control group
+           },      success: function (label) {
+             label.closest('.form-group').removeClass('has-error');
+             label.remove();
+           },      errorPlacement: function (error, element) {
+             error.insertAfter(element.closest('.form-control'));
+           },      submitHandler: function (form) {
+             form.submit();
+           }
+         });
+       });
+    </script>

@@ -1,0 +1,166 @@
+<div role="main">
+  <div class="main-profile text-center pri">
+    <div class="container">
+          <div class="white-back">
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="private">
+						<div class="text-area">
+							<div id="show_message"></div>
+							
+
+							
+						</div>
+                    <form name="send_conversation" id="send_conversation" action="/messages/send_msg_db" method="post">  
+                    <input type="hidden" id="sender_id" name="sender_id"  value="<%= currentUser.id %>" />
+                    <input type="hidden" id="receiver_id" name="receiver_id"  value="<%= receiver_id %>" />
+
+                    <textarea placeholder="Type Here" name="message" data-validation="required" data-validation-error-msg="Please enter data" class="error-msg"></textarea>
+                      <ul class="first-btn">
+                        <li><button type="submit" id="send_message"> Send </button></li>
+                      </ul>
+                    </form>  
+                    </div>
+                 </div>
+              </div>
+          </div>    
+      </div>
+  </div>
+</div> 
+
+/* 24-04-2018 Start */
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="position: absolute; top:100px;">
+    
+      <!-- Modal Header -->
+      <div class="modal-header" style="border:none;">
+        <h4 class="modal-title">Secret Name</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body" style="margin:0 20px;">
+        <form input="text" action="" method = "post">
+           <div class="form-group">
+                  <input type="text" name="receiver_conversation_key" id="receiver_conversation_key" placeholder="Name" class="inp-detail" data-validation="required" data-validation-length="3-20" 
+                  data-validation-error-msg="Secret name has to be an alphanumeric value (3-12 chars)">
+            </div>
+        </form>
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer" style="border:none;">
+        <button type="button" class="btn btn-danger block" id="save_conversation_key">Submit</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+/* 24-04-2018 End */
+
+<script type="text/javascript">
+$(document).ready(function(){
+    my_message();
+});
+function my_message()
+{
+	var receiver_id = $('#receiver_id').val();
+   	//alert(receiver_id);
+   $.ajax({
+        type:'GET',
+        url: "/messages/my_message/"+receiver_id,
+        data: '',
+        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        
+        success: function(response){
+            console.log(response);
+            if(response[0] == 'success'){
+               
+                $('#show_message').html(response[1]);
+                var last_id = $('#show_message').children().last().attr('id');
+                console.log(last_id);
+                $('#last_id').focus();
+
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log('Error: ' + error.message);
+        }
+    });
+   setTimeout("my_message()",10000);
+}
+
+  $.validate({
+    modules : 'location, date, security, file',
+    onModulesLoaded : function() {
+      $('#country').suggestCountry();
+    }
+  });
+
+  $.validate({
+  borderColorOnError : '#FFF',
+  addValidClassOnAll : true
+});
+
+// Restrict presentation length
+$('#presentation').restrictLength( $('#pres-max-length') );
+/* 24-04-2018 Start */
+$('#send_message').click( function() {
+ 
+  var sender_id   = $('#sender_id').val();
+  var receiver_id = $('#receiver_id').val();
+  
+  $.ajax({
+      type:'GET',
+      url: "/messages/checkConversationKey/"+sender_id+"/"+receiver_id,
+      data: '',
+      jsonpCallback: 'callback', // this is not relevant to the POST anymore
+      
+      success: function(response){
+         
+          if(response.conversationkeyCount ==0){
+            $('#myModal').modal('show');
+            return false;
+          }
+          else{
+             $( "#send_conversation" ).submit();
+          }
+      },
+      error: function (xhr, status, error) {
+          console.log('Error: ' + error.message);
+          return false;
+      }
+  });
+  return false;
+});
+$('#save_conversation_key').click( function() {
+  var sender_id   = $('#sender_id').val();
+  var receiver_id = $('#receiver_id').val();
+  var receiver_conversation_key = $('#receiver_conversation_key').val();
+
+  $.ajax({
+      type:'GET',
+      url: "/messages/addConversationKey/"+sender_id+"/"+receiver_id+"/"+receiver_conversation_key,
+      data: '',
+      jsonpCallback: 'callback', // this is not relevant to the POST anymore
+      
+      success: function(response){
+          
+          if(response.err ==0){
+            $( "#send_conversation" ).submit();
+          }
+          else{
+            return false;
+          }
+      },
+      error: function (xhr, status, error) {
+          console.log('Error: ' + error.message);
+          return false;
+      }
+  });
+
+});
+/* 24-04-2018 End */
+</script>

@@ -1,0 +1,47 @@
+<div class="page-sidebar-wrapper">
+	<div class="page-sidebar navbar-collapse collapse"> 
+	<!-- add "navbar-no-scroll" class to disable the scrolling of the sidebar menu --> 
+	<!-- BEGIN SIDEBAR MENU -->
+	<ul class="page-sidebar-menu" data-auto-scroll="true" data-slide-speed="200">
+		<li class="sidebar-toggler-wrapper"> 
+			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+			<div class="sidebar-toggler hidden-phone"> </div>
+			<!-- BEGIN SIDEBAR TOGGLER BUTTON --> 
+		</li>
+		<br/>
+		<li class="start <% if (typeof page_name != "undefined" && page_name === 'dashboard') { %>active<% } %>"> 
+			<a href="dashboard"> 
+				<i class="fa fa-home"></i> 
+				<span class="title"> Dashboard </span> 
+			</a> 
+		</li>
+		<li class="start <% if (typeof page_name != "undefined" && page_name === 'manageUser') { %>active<% } %>">
+			<a href="javascript:void(0);">
+				<i class="fa fa-user"></i>
+				<span class="title">User Management</span>
+				<span class="arrow "></span>
+			</a>
+			<ul class="sub-menu">
+				<li <% if (typeof page_name != "undefined" && page_name === 'manageUser') { %> class="active" <% } %>>
+				<a href="manageUser">Manage Users</a>
+				</li>
+			</ul>
+		</li>
+
+<!-- Manage Criminal Activity -->
+		<li class="start <% if (typeof page_name != "undefined" && page_name === 'criminalactivity') { %>active<% } %>">
+			<a href="/criminalactivity">
+				<i class="fa fa-user"></i>
+				<span class="title">Manage Criminal Activity</span>
+				<span class="arrow "></span>
+			</a>
+			<ul class="sub-menu">
+				<li <% if (typeof page_name != "undefined" && page_name === 'managcriminalactivityeUser') { %> class="active" <% } %>>
+				<a href="/criminalactivity">Check Messages</a>
+				</li>
+			</ul>
+		</li>
+		
+		
+		
+</div>

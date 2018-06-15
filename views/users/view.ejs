@@ -1,0 +1,30 @@
+<% //JSON.stringify(resultset) %>
+<section id="three" class="wrapper align-center">
+
+	<div class="inner">
+		<div class="flex flex-2">
+			<article>
+				<div class="image round">
+					<% if(resultset['profile_image']==''){%>
+					<img src="../frontend/images/pic01.jpg" alt="Pic 01" />
+					<% }else{%>
+					<img src="../frontend/images/pic01.jpg" alt="Pic 01" />
+					<% }%>
+				</div>
+				<header>
+					<h3><%= ((resultset['username']!=null && resultset['username']!='') ? resultset['username'] : 'N/A'); %><br /> <%= ((resultset['email']!=null && resultset['email']!='') ? resultset['email'] : 'N/A'); %><br />
+					<%= ((resultset['phone']!=null && resultset['phone']!='') ? resultset['phone'] : 'N/A'); %>
+					</h3>
+					<% if( resultset.blockUsers!=null && resultset.blockUsers['user_id']==currentUser.id){%>
+						<h1> Blocked </h1>
+					<% } %>	
+					<span class="sign-in"><a href="/users/secretmsg/<%= userId %>" style="color: inherit; text-decoration: none;"><button type="submit">Secret Message</button></a></span>
+					<span class="sign-in"><a href="/users/secconversation<%= userId %>" style="color: inherit; text-decoration: none;"><button type="submit">Secret Conversation</button></a></span>
+				</header>
+				
+			</article>
+			
+		</div>
+	</div>
+</section>
+

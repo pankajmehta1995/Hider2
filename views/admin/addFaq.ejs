@@ -1,0 +1,144 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+  <div class="col-md-12"> 
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title"><%= main_item %></h3>
+   <ul class="page-breadcrumb breadcrumb">
+      <li> <i class="fa fa-home"></i> <a href="javascript:void(0)"> Home </a> <i class="fa fa-angle-right"></i> </li>
+      <li> <a href="javascript:void(0)"> Manage Faq </a> <i class="fa fa-angle-right"></i>  </li>
+      <li> <a href="javascript:void(0)"> <%= page_name; %>  </a> </li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB--> 
+  </div>
+</div>
+<%// resultset.faq_topic_id; %>
+<!-- END PAGE HEADER--> 
+<!-- BEGIN PAGE CONTENT-->
+
+<div class="row profile">
+  <div class="col-md-12"> 
+    <!--BEGIN TABS-->
+    <div class="tabbable tabbable-custom tabbable-full-width">
+      <ul class="nav nav-tabs">
+        <li class="active"> <a href="#tab_1_1" data-toggle="tab"><%= page_name; %></a> </li>
+      </ul>
+       <div id="message" style="margin-top: -25px; margin-left: 284px; position:absolute;"> 
+		  <font color='green'> <%= messages.successmsg; %> </font> 
+		  <font color='red'> <%= messages.errormsg; %> </font> 
+		</div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1_1">
+          <div class="row">
+            <div class="col-md-9">
+            <div class="row"></div>
+            <!--end row-->
+            <div class="tab-pane active" id="tab1"></div>
+            <form name="addEditFaq" id="addEditFaq" action="add_edit_faq_to_database" method="post">
+                <% if(typeof doaction!=undefined && doaction == "edit"){ %>
+				<input type="hidden" name="faq_id" value="<%= resultset.id %>">
+				<% } %>
+              <div class="form-group flare">
+                <label class="control-label col-md-3"> Faq topics :<span class="required"> * </span> </label>
+                <div class="col-md-5 input">
+                  <select id="faq_topic_id" name="faq_topic_id" class="form-control">
+                    <option value="">Select Faq Topics</option>
+                    <%  for(var i=0; i < faqTopics.length; i++){ 
+						if(faqTopics[i]['id'] === resultset.faq_topic_id){
+							$selected = 'selected=selected';
+						}
+						else{
+							$selected = '';
+						}
+					%>
+                     <option <%=  $selected ; %>  value="<%= faqTopics[i]['id'] %>"><%= faqTopics[i]['title'] %></option>
+                    <% } %>
+                  </select>
+                </div>
+              </div>
+             
+             <div class="form-group flare">
+                <label class="control-label col-md-3"> Faq Question :<span class="required"> * </span> </label>
+                <div class="col-md-5 input">
+                  <input class="form-control"  name="faq_question"  id="faq_question"  type="text" value="<%= ((typeof resultset.faq_question!= "undefined" && resultset.faq_question != null) ? resultset.faq_question : "") %>"/>
+                </div>
+              </div>
+              <div class="form-group flare">
+                <label class="control-label col-md-3"> Faq Answer :<span class="required"> * </span> </label>
+                <div class="col-md-5 input" style="width:87.666667%">
+                  <textarea  class="ckeditor"  name="faq_answer" id="faq_answer"><%= ((typeof resultset.faq_answer!= "undefined" && resultset.faq_answer != null) ? resultset.faq_answer : "") %></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-4">&nbsp; </label>
+                <div class="col-md-8">
+                  <button type="submit" value="Save" class="btn theme-btn voilet green pull-left">Save</button>
+                  <a href="manageFaqs"  class="btn blue pull-left margd">Cancel</a> </div>
+              </div>
+              </div>
+             
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--tab_1_2--> 
+    
+  </div>
+</div>
+
+<!--END TABS-->
+</div>
+<!-- END PAGE CONTENT--> 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#addEditFaq").validate({
+			errorElement: 'span', //default input error message container
+			errorClass: 'help-block', // default input error message class
+			focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				faq_topic_id: {
+					required: true
+				},
+				faq_question: {
+					required: true
+				},
+				faq_answer: {
+					required: true
+				}
+			},
+			 messages: {
+				faq_topic_id: {
+					required: "Faq Topics is required."
+				},
+				faq_question: {
+					required: "Faq question is required."
+				},
+				faq_answer: {
+					required: "Faq answer is required."
+				}
+			},
+			invalidHandler: function (event, validator) { //display error alert on form submit   
+				$('.alert-danger', $('#addEditFaq')).show();
+			},
+
+			highlight: function (element) { // hightlight error inputs
+				$(element)
+					.closest('.input').addClass('has-error'); // set error class to the control group
+			},
+
+			success: function (label) {
+				label.closest('.input').removeClass('has-error');
+				label.remove();
+			},
+
+			errorPlacement: function (error, element) {
+				error.insertAfter(element.closest('.form-control'));
+			},
+
+			submitHandler: function (form) {
+				form.submit();
+			}
+		});	
+	});
+</script>

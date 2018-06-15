@@ -1,0 +1,82 @@
+<div role="main">
+<!--27-04--><section class="banner_area">
+              <div class="layer">
+                    <div class="container">
+                     <div class="banner_content">
+                      <h3 title="Feedback"><img class="left-img" src="/frontend/images/left-heartline.png" alt="">Hider<img class="right-img" src="/frontend/images/right-heartline.png" alt=""></h3>
+                    </div>
+                 </div>
+             </div>
+        </section>
+
+	<div class="feedback-page">
+		<div class="container-fluid">
+			<div class="feedback-field">   
+			   <div class="row">
+				  <div class="col-md-12">
+					<div class="feedback-details">
+					  <h1>Feedback</h1>
+					  <img src="/frontend/images/red-line.png">
+					   <div id="message"  style="margin:0px 0 0px 0px; width:100%;">
+                         <font color='green'> <%= messages.successmsg; %> </font> 
+                          <font color='red'> <%= messages.errormsg; %> </font> 
+                         
+                      </div>
+							<form class="form-detail feedback-text" action="/friends/feedbacks" method="post" name="feed" id="feed">
+								<input type="hidden" id="user_feedback_id" name="user_feedback_id" value="<%= user_feedback_id %>">
+								<div class="form-group">
+								   <textarea class="form-control inp-detail" id="exampleTextarea" rows="5" placeholder="Feedback" name = "exampleTextarea" ></textarea></div>
+								<div class="form-group">
+								  <input type="submit" name="Submit" value="submit" class="s-feedback">
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+		   </div>
+		</div>
+	</div>
+</div>	
+
+
+     <script type="text/javascript">
+       $(document).ready(function(){
+         $("#feed").validate({
+           
+           errorElement: 'span', //default input error message container
+           errorClass: 'help-block', // default input error message class
+           focusInvalid: false, // do not focus the last invalid input
+           ignore: [],
+           debug: true,
+           rules: {
+             exampleTextarea: {
+               required:true
+           
+             }
+
+           },
+            messages: {
+             exampleTextarea: {
+              
+               required: "Please enter your message",
+             }
+
+           },
+           invalidHandler: function (event, validator) { //display error alert on form submit  
+             $('.alert-danger', $('#feed')).show();
+           },      highlight: function (element) { // hightlight error inputs
+             $(element)
+               .closest('.form-group').addClass('has-error'); // set error class to the control group
+           },      success: function (label) {
+             label.closest('.form-group').removeClass('has-error');
+             label.remove();
+           },      errorPlacement: function (error, element) {
+             error.insertAfter(element.closest('.form-control'));
+           },      submitHandler: function (form) {
+             form.submit();
+           }
+         });
+       });
+    </script> 
+    

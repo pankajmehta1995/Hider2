@@ -1,0 +1,148 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+  <div class="col-md-12"> 
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title"><%= main_item %></h3>
+   <ul class="page-breadcrumb breadcrumb">
+      <li> <i class="fa fa-home"></i> <a href="javascript:void(0)"> Home </a> <i class="fa fa-angle-right"></i> </li>
+      <li> <a href="javascript:void(0)"> Manage Investment Plan </a> <i class="fa fa-angle-right"></i>  </li>
+      <li> <a href="javascript:void(0)"> <%= page_name; %>  </a> </li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB--> 
+  </div>
+</div>
+<%// JSON.stringify(resultset) %>
+<!-- END PAGE HEADER--> 
+<!-- BEGIN PAGE CONTENT-->
+
+<div class="row profile">
+  <div class="col-md-12"> 
+    <!--BEGIN TABS-->
+    <div class="tabbable tabbable-custom tabbable-full-width">
+      <ul class="nav nav-tabs">
+        <li class="active"> <a href="#tab_1_1" data-toggle="tab"><%= page_name; %></a> </li>
+      </ul>
+       <div id="message" style="margin-top: -25px; margin-left: 284px; position:absolute;"> 
+		  <font color='green'> <%= messages.successmsg; %> </font> 
+		  <font color='red'> <%= messages.errormsg; %> </font> 
+		</div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1_1">
+          <div class="row">
+            <div class="col-md-9">
+            <div class="row"></div>
+            <!--end row-->
+            <div class="tab-pane active" id="tab1"></div>
+            <form name="addEditIntPlan" id="addEditIntPlan" action="add_edit_investmant_plan_to_database" method="post">
+                <% if(typeof doaction!=undefined && doaction == "edit"){ %>
+				<input type="hidden" name="investment_plan_id" value="<%= resultset.id %>">
+				<% } %>
+             
+             
+             <div class="form-group flare">
+                <label class="control-label col-md-4"> Investment Plan :<span class="required"> * </span> </label>
+                <div class="col-md-5 input">
+                  <input class="form-control"  name="investment_name"  id="investment_name"  type="text" value="<%= ((typeof resultset.investment_name!= "undefined" && resultset.investment_name != null) ? resultset.investment_name : "") %>" readonly="readonly"/>
+                </div>
+              </div>
+              <div class="form-group flare">
+                <label class="control-label col-md-4"> Investment Amount USD :<span class="required"> * </span> </label>
+                <div class="col-md-5 input">
+                  <input class="form-control"  name="investment_amount_usd"  id="investment_amount_usd"  type="text" value="<%= ((typeof resultset.investment_amount_usd!= "undefined" && resultset.investment_amount_usd != null) ? resultset.investment_amount_usd : "") %>"/>
+                </div>
+              </div>
+              
+              <div class="form-group flare">
+                <label class="control-label col-md-4"> Investment Amount EUR :<span class="required"> * </span> </label>
+                <div class="col-md-5 input">
+                  <input class="form-control"  name="investment_amount_eur"  id="investment_amount_eur"  type="text" value="<%= ((typeof resultset.investment_amount_eur!= "undefined" && resultset.investment_amount_eur != null) ? resultset.investment_amount_eur : "") %>"/>
+                </div>
+              </div>
+              
+              <div class="form-group flare">
+                <label class="control-label col-md-4"> Investment Amount BTC :<span class="required"> * </span> </label>
+                <div class="col-md-5 input">
+                  <input class="form-control"  name="investment_amount_btc"  id="investment_amount_btc"  type="text" value="<%= ((typeof resultset.investment_amount_btc!= "undefined" && resultset.investment_amount_btc != null) ? resultset.investment_amount_btc : "") %>"/>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-md-4">&nbsp; </label>
+                <div class="col-md-8">
+                  <button type="submit" value="Save" class="btn theme-btn voilet green pull-left">Save</button>
+                  <a href="manageInvestmentPlan"  class="btn blue pull-left margd">Cancel</a> </div>
+              </div>
+              </div>
+             
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--tab_1_2--> 
+    
+  </div>
+</div>
+
+<!--END TABS-->
+</div>
+<!-- END PAGE CONTENT--> 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#addEditIntPlan").validate({
+			errorElement: 'span', //default input error message container
+			errorClass: 'help-block', // default input error message class
+			focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				investment_name: {
+					required: true
+				},
+				investment_amount_usd: {
+					required: true
+				},
+				investment_amount_eur: {
+					required: true
+				},
+				investment_amount_btc: {
+					required: true
+				}
+			},
+			 messages: {
+				investment_name: {
+					required: "Investment Name is required."
+				},
+				investment_amount_usd: {
+					required: "Investment amount USD is required."
+				},
+				investment_amount_eur: {
+					required: "Investment amount EUR is required."
+				},
+				investment_amount_btc: {
+					required: "Investment amount BTC is required."
+				}
+			},
+			invalidHandler: function (event, validator) { //display error alert on form submit   
+				$('.alert-danger', $('#addEditIntPlan')).show();
+			},
+
+			highlight: function (element) { // hightlight error inputs
+				$(element)
+					.closest('.input').addClass('has-error'); // set error class to the control group
+			},
+
+			success: function (label) {
+				label.closest('.input').removeClass('has-error');
+				label.remove();
+			},
+
+			errorPlacement: function (error, element) {
+				error.insertAfter(element.closest('.form-control'));
+			},
+
+			submitHandler: function (form) {
+				form.submit();
+			}
+		});	
+	});
+</script>

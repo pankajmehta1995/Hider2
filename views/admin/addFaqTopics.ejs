@@ -1,0 +1,108 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+  <div class="col-md-12"> 
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title"><%= main_item %></h3>
+	<ul class="page-breadcrumb breadcrumb">
+      <li> <i class="fa fa-home"></i> <a href="javascript:void(0)"> Home </a> <i class="fa fa-angle-right"></i> </li>
+      <li> <a href="javascript:void(0)"> Manage Faq Topics  </a> <i class="fa fa-angle-right"></i>  </li>
+      <li> <a href="javascript:void(0)"> <%= page_name; %>  </a> </li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB--> 
+  </div>
+</div>
+
+	
+<!-- END PAGE HEADER--> 
+<!-- BEGIN PAGE CONTENT-->
+
+<div class="row profile">
+  <div class="col-md-12"> 
+    <!--BEGIN TABS-->
+    <div class="tabbable tabbable-custom tabbable-full-width">
+      <ul class="nav nav-tabs">
+        <li class="active"> <a href="#tab_1_1" data-toggle="tab"><%= page_name; %></a> </li>
+      </ul>
+      <div id="message" style="margin-top: -25px; margin-left: 284px; position:absolute;"> 
+		  <font color='green'> <%= messages.successmsg; %> </font> 
+		  <font color='red'> <%= messages.errormsg; %> </font> 
+		</div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1_1">
+          <div class="row">
+            <div class="col-md-9">
+            <div class="row"></div>
+            <!--end row-->
+            <div class="tab-pane active" id="tab1"></div>
+            <form name="addEditFaqTopic" id="addEditFaqTopic" action="add_edit_faq_topics_to_database" method="post">
+              <% if(typeof doaction!=undefined && doaction == "edit"){ %>
+              <input type="hidden" name="faq_topics_id" value="<%= resultset.id %>">
+              <% } %>
+              <div class="form-group flare">
+                <label class="control-label col-md-4"> Faq topics<span class="required"> * </span> </label>
+                <div class="col-md-5 input">
+                  <input class="form-control"  name="title"  id="title"  type="text" value="<%= ((typeof resultset.title!= "undefined" && resultset.title != null) ? resultset.title : "") %>"/>
+                </div>
+              </div>
+             
+              <div class="form-group">
+                <label class="control-label col-md-4">&nbsp; </label>
+                <div class="col-md-8">
+                  <button type="submit" value="Save" class="btn theme-btn voilet green pull-left" >Save</button>
+                  <a href="manageFaqTopics"  class="btn blue pull-left margd">Cancel</a> </div>
+              </div>
+              </div>
+             
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--tab_1_2--> 
+    
+  </div>
+</div>
+
+<!--END TABS-->
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#addEditFaqTopic").validate({
+			errorElement: 'span', //default input error message container
+			errorClass: 'help-block', // default input error message class
+			focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				title: {
+					required: true
+				}
+			},
+			 messages: {
+				title: {
+					required: "Title is required."
+				}
+			},
+			invalidHandler: function (event, validator) { //display error alert on form submit   
+				$('.alert-danger', $('#addEditFaqTopic')).show();
+			},
+
+			highlight: function (element) { // hightlight error inputs
+				$(element)
+					.closest('.input').addClass('has-error'); // set error class to the control group
+			},
+
+			success: function (label) {
+				label.closest('.input').removeClass('has-error');
+				label.remove();
+			},
+
+			errorPlacement: function (error, element) {
+				error.insertAfter(element.closest('.form-control'));
+			},
+
+			submitHandler: function (form) {
+				form.submit();
+			}
+		});	
+	});
+</script>

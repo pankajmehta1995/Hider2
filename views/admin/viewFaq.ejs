@@ -1,0 +1,69 @@
+<!-- BEGIN PAGE HEADER-->
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+  <div class="col-md-12"> 
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title"><%= main_item; %></h3>
+    <ul class="page-breadcrumb breadcrumb">
+      <li> <i class="fa fa-home"></i> <a href="javascript:void(0)"> Home </a> <i class="fa fa-angle-right"></i> </li>
+      <li> <a href="javascript:void(0)"> Manage User </a> <i class="fa fa-angle-right"></i> </li>
+      <li> <a href="javascript:void(0)"> <%= page_name; %> </a> </li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB--> 
+  </div>
+</div>
+<%// JSON.stringify(resultset) %>
+<!-- END PAGE HEADER--> 
+<!-- BEGIN PAGE CONTENT-->
+<div class="row profile">
+  <div class="col-md-12"> 
+    <!--BEGIN TABS-->
+    <div class="tabbable tabbable-custom tabbable-full-width">
+      <ul class="nav nav-tabs">
+        <li class="active"> <a href="#tab_1_1" data-toggle="tab"><%= page_name; %></a> </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1_1">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row"> 
+                <!--end col-md-8--> 
+                <!--end col-md-4--> 
+              </div>
+              <!--end row-->
+              <div class="tab-pane active" id="tab1">
+             	 <div class="form-group detra">
+                  <label class="control-label col-md-4">Faq Topics :</label>
+                  <div class="col-md-8"> <span class="detail_for_name">
+                   <%= ((typeof resultset['faqs_topic']!= "undefined" && resultset['faqs_topic'] != null) ? resultset['faqs_topic']['title'] : "N/A") %>
+                    </span> </div>
+                </div>
+                <div class="form-group detra">
+                  <label class="control-label col-md-4">Faq Question :</label>
+                  <div class="col-md-8"> <span class="detail_for_name">
+                   <%= ((typeof resultset.faq_question!= "undefined" && resultset.faq_question != null) ? resultset.faq_question : "N/A") %>
+                    </span> </div>
+                </div>
+                <div class="form-group detra">
+                  <label class="control-label col-md-4">Faq Answer :</label>
+                  <div class="col-md-8"> <span class="detail_for_name">
+                    <%= ((typeof resultset.faq_answer!= "undefined" && resultset.faq_answer != null) ? resultset.faq_answer : "N/A") %>
+                    </span> </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-md-4">&nbsp; </label>
+                <div class="col-md-8">
+                  <a href="manageFaqs"  class="btn blue pull-left margd">Cancel</a> </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <!--tab_1_2--> 
+        </div>
+      </div>
+      <!--END TABS--> 
+    </div>
+  </div>
+  <!-- END PAGE CONTENT--> 
+</div>
+

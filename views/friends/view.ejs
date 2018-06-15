@@ -1,0 +1,206 @@
+<%// JSON.stringify(resultset,null ,4) %>
+
+<%
+    if(resultset['login_status']==1){
+        $loginClass = 'green';
+    }
+    else{
+        $loginClass = '';
+    }
+%>
+<div role="main">
+    <div class="my-friends">
+     <section class="banner_area1 profile-background">
+
+<!-- <div class="<%= (resultset['login_status']==1 ? 'my-img1' : '') %>">
+ -->                        <div class= "my-img1 ">
+                                <% if(resultset['cover_image']=='' || resultset['cover_image']==null){ %>
+                                <img src="/frontend/images/profileback.jpg" class="img-back">
+                                <% }else{%>
+                                 <img class="img" src="/user_cover_images/<%= resultset['cover_image'] %>" alt="" style="width:100%;">
+                                <% }%>
+                            </div> 
+
+
+ <div class="profiles-inside">
+                <div>
+                    <div class="profile-content">
+
+
+
+
+                        <!-- <div class="<%= (resultset['login_status']==1 ? 'my-img' : '') %>"> -->
+                        <div class= "my-img ">
+                             <% if(resultset['profile_image']=='' || resultset['profile_image']==null){ %>
+                            <img class="img-circle" src="/user_images/members-4.jpg" alt="" style="padding: 10px;">
+                            <% }else{%>
+                             <img class="img-circle" src="/user_images/<%= resultset['profile_image'] %>" alt="" style="padding: 10px;">
+                            <% }%>
+                        </div>
+
+
+
+
+                      
+                        
+                        <div class="right-side-content view-frnd">
+                             <ul class="first-btn v-message">
+                            <li><a href="/messages/send_message/<%= cryptr.encrypt(resultset['id']) %>">Send Private Message</a></li>
+                            <li><a href="/messages/conversations/<%= cryptr.encrypt(resultset['id']) %>">Start Private Conversation</a></li></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mypro-section2 f-pro">
+            <div class="container" style="box-shadow: 4px 5px 10px #cccccc;">
+             <div class="white-back">
+                <div class="row">
+                    <!-- 
+                    <div class="col-lg-4 col-md-12 text-center">
+                        <span class="profile-thumb <%= (resultset['login_status']==1 ? 'green' : '') %>">
+                           <% if(resultset['profile_image']=='' || resultset['profile_image']==null){ %>
+                            <img src="/user_images/username_ic.png" alt="" />
+                            <% }else{%>
+                            <img src="/user_images/<%= resultset['profile_image'] %>" alt="" />
+                            <% }%>
+                        </span>
+                    </div>-->
+                    <div class="col-lg-12 col-md-12">
+                        <div class="user-info">
+                            <ul class="content-user-info">
+                                <!--<li>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>First Name:</label>
+                                            <%= resultset['first_name'] %>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Last Name:</label>
+                                            <%= resultset['last_name'] %>
+                                        </div>
+                                    </div>    
+                                </li>-->
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>First Name:</label>
+                                            <%= ((resultset['first_name']!=null && resultset['first_name']!='') ? resultset['first_name'] : ''); %>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Last Name:</label>
+                                           <%= ((resultset['last_name']!=null && resultset['last_name']!='') ? resultset['last_name'] : ''); %>
+                                        </div>
+                                    </div>    
+                                </li>
+                                <li>
+<!--                                     <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Phone:</label>
+                                            <%= resultset['phone'] %>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Email:</label>
+                                            <%= resultset['email'] %>
+                                        </div>
+                                    </div>     -->
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Gender:</label>
+                                            <%= resultset['gender'] %>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Birthday:</label>
+                                                <%= date%>
+                                        </div>
+                                    </div>    
+                                </li>
+                               
+                               
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+  </section>
+            
+      
+       <!--  <div class="container">
+            <div class="white-back">
+            <a href="/users/updateprofile" class="edit-btn"><i class="far fa-edit"></i></a>
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 text-center">
+                        <span class="profile-thumb <%= (resultset['login_status']==1 ? 'green' : '') %>">
+                           <% if(resultset['profile_image']=='' || resultset['profile_image']==null){ %>
+                            <img src="/user_images/username_ic.png" alt="" />
+                            <% }else{%>
+                            <img src="/user_images/<%= resultset['profile_image'] %>" alt="" />
+                            <% }%>
+                        </span>
+                    </div>
+                    <div class="col-lg-8 col-md-12">
+                        <div class="user-info">
+                            <ul class="content-user-info">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>First Name:</label>
+                                            <%= resultset['first_name'] %>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Last Name:</label>
+                                            <%= resultset['last_name'] %>
+                                        </div>
+                                    </div>    
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Phone:</label>
+                                            <%= resultset['phone'] %>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Email:</label>
+                                            <%= resultset['email'] %>
+                                        </div>
+                                    </div>    
+                                </li>
+                                <!li>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Gender:</label>
+                                            XXX
+                                        </div>
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Birthday:</label>
+                                            DD/MM/YYYY
+                                        </div>
+                                    </div>    
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12">
+                                            <label>Nationality:</label>
+                                            XXX
+                                        </div>
+                                    </div>    
+                                </li-->
+                           <!-- </ul>
+                        </div>
+                        <ul class="first-btn">
+                            <li><a href="/users/logout">Logout</a></li>
+                            <li><a href="/users/deactivate_account">Deactivate Account</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    -->
+    </div>
+</div>    
+  

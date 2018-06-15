@@ -1,0 +1,63 @@
+<div role="main">
+  <!--27-04--><section class="banner_area">
+			      <div class="layer">
+                   <div class="container">
+                    <div class="banner_content">
+                      <h3 title="About us"><img class="left-img" src="/frontend/images/left-heartline.png" alt="">Contact us<img class="right-img" src="/frontend/images/right-heartline.png" alt=""></h3>
+                    </div>
+                  </div>
+              </div>
+        </section>
+
+			<div class="container-fluid">
+				<div class="contact-field">
+					<div class="col-md-12">
+						<div class="contact-details">
+							<h1><b>Get in Touch with us<b></h1>
+								<img src="/frontend/images/red-line.png">
+							<div id="message"  style="margin:-20px 0 10px 0; width:100%;">
+						       <font color='green'> <%= messages.successmsg; %> </font> 
+					  			<font color='red'> <%= messages.errormsg; %> </font>
+					  		</div>	
+							<form class="contact-detail" method = "post" action="">
+								<div class="contact-group">
+									<input type="text" name="name" placeholder="First Name" class="inp-detail" data-validation="custom" data-validation-regexp="^([a-zA-Z ]+)$"
+                        			data-validation-error-msg="Only alphabets are allowed.">
+								</div>
+								
+								<div class="contact-group">
+									<input type="text" name="email" placeholder="Email" class="inp-detail" data-validation="email">
+								</div>
+
+								<div class="contact-group">
+								   <textarea class="form-control inp-detail" name = "message" id="exampleTextarea" rows="5" placeholder="Message" data-validation="required" ></textarea>
+								</div>
+								<div class="contact-group">
+								  <input type="submit" value="Send">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+	</div>
+
+
+<script>
+  $.validate({
+    modules : 'location, date, security, file',
+    onModulesLoaded : function() {
+      $('#country').suggestCountry();
+    }
+  });
+
+  $.validate({
+  borderColorOnError : '#FFF',
+  addValidClassOnAll : true
+});
+
+  // Restrict presentation length
+  $('#presentation').restrictLength( $('#pres-max-length') );
+
+</script>	

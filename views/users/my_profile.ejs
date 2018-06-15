@@ -1,0 +1,98 @@
+<%// JSON.stringify(resultset); %>
+<div role="main">
+    <div class="my-profile">
+     <section class="banner_area1 profile-background">
+            
+                         <div class="<%= (resultset['login_status']==1 ? 'my-img1' : '') %>">
+                            <% if(resultset['cover_image']=='' || resultset['cover_image']==null){ %>
+                                <img src="/frontend/images/profileback.jpg" class="img-back">
+                                <% }else{%>
+                                 <img class="img" src="/user_cover_images/<%= resultset['cover_image'] %>" alt="" style="width:100%;">
+                                <% }%>
+                        </div> 
+
+            <div class="profiles-inside">
+                <div>
+                    <div class="profile-content">
+
+
+
+
+                        <div class="<%= (resultset['login_status']==1 ? 'my-img' : '') %>">
+                        <% if(resultset['profile_image']=='' || resultset['profile_image']==null){ %>
+                            <img class="img-circle" src="/user_images/members-4.jpg" alt="" style="padding: 10px;">
+                            <% }else{%>
+                             <img class="img-circle" src="/user_images/<%= resultset['profile_image'] %>" alt="" style="padding: 10px;">
+                            <% }%>
+                        </div>
+                        <div class="my-name">
+                            <h3><%= resultset['first_name']+' '+resultset['last_name']%></h3>
+                            <!--h4>22 years old</h4-->
+                            <!--ul>
+                                <li><a href="#">Mohali, Punjab</a></li>
+                            </ul-->
+                        </div>
+                        <div class="right-side-content my-pro-bttn">
+
+                             <ul class="first-btn">
+                              <!-- <li class="hidden-xs-down"><a href="/users/logout">Logout</a></li> -->
+                              <li><a href="/users/updateprofile">Update Profile</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mypro-section2 my-p">
+            <div class="container" style="box-shadow: 8px 8px 20px #bfbfbf;">
+             <div class="white-back w-back">
+              <!-- <a href="/users/updateprofile" class="edit-btn"><i class="far fa-edit"></i></a> -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="user-info">
+                            <ul class="content-user-info">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>First Name:</label>
+                                            <%= resultset['first_name'] %>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Last Name:</label>
+                                            <%= resultset['last_name'] %>
+                                        </div>
+                                    </div>    
+                                </li>
+                               
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Phone:</label>
+                                            <%= resultset['phone'] %>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Email:</label>
+                                            <%= resultset['email'] %>
+                                        </div>
+                                    </div>    
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Gender:</label>
+                                            <%= (resultset['gender']!=null ? resultset['gender']: "MALE") %>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Birthday:</label>
+                                                <%= date%>  
+                                        </div>
+                                    </div>    
+                                </li>
+                               
+            
+        </section>
+
+      
+    </div>
+</div>    
+  

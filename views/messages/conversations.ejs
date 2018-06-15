@@ -1,0 +1,303 @@
+<!-- <%= length %> -->
+<!-- <%= JSON.stringify(resultset) %> -->
+<div role="main">
+  <section class="banner_area">
+                  <div class="layer">
+                   <div class="container">
+                    <div class="banner_content">
+                      <h3 title="Hider"><img class="left-img" src="/frontend/images/left-heartline.png" alt="">Chat<img class="right-img" src="/frontend/images/right-heartline.png" alt=""></h3>
+                    </div>
+                  </div>
+              </div>
+  </section>
+<span class="end-convo-msg"><i class="fa fa-lock" aria-hidden="true"></i> Messages to this chat are now secured with end-to-end encryption.</span>
+      <div class="main-profile text-center pri">
+        <div class="container">
+              <div class="white-back">
+                <div class="row">
+                    <div class="col-md-8 convo-col" style="margin: 0 auto;">
+                      <div class="private">
+                       <div class="text-area">
+                       <div id="show_message"></div>
+                      </div>
+                            <form name="send_conversation" id="send_conversation" action="/messages/send_msg_db" method="post">  
+                            <input type="hidden" id="sender_id" name="sender_id"  value="<%= currentUser.id %>" />
+                            <input type="hidden" id="receiver_id" name="receiver_id"  value="<%= receiver_id %>" />
+                            <input type="hidden" id="msg_length" name="msg_length"  value="<%= length %>" />
+
+                           
+                                <textarea placeholder="Type Here" name="message" data-validation="required" data-validation-error-msg="Please enter data" class="error-msg" id="emojionearea1"></textarea>
+                                <div id="message_error"></div>
+                          
+                                
+                              <ul class="first-btn">
+                                <li><button type="submit" id="send_message"> Send </button></li>
+                              </ul>
+                            </form>  
+                        </div>
+                     </div>
+                  </div>
+              </div>    
+          </div>
+      </div>
+    
+</div> 
+
+<!-- 24-04-2018 Start--> 
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="position: absolute; top:100px;">
+    
+      <!-- Modal Header -->
+      <div class="modal-header" style="border:none;">
+        <h4 class="modal-title" style="color: red;font-weight: bold;">Secret Name</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body" style="margin:0 20px;">
+        <form input="text" action="" name="sec_name" id="sec_name" method = "post">
+           <div class="form-group">
+                  <input type="text" name="receiver_conversation_key" id="receiver_conversation_key" placeholder="Name" class="inp-detail">
+            </div>
+            <div id="secret_error"></div>
+        </form>
+      </div>
+      <% if(resultset.length == 1){ %>
+      <i class="fas fa-caret-down" style="position: absolute;right: 52px;bottom: 102px;"></i>
+      <select id="chat_save_time" name="chat_save_time" class="timer-set">
+      
+        <option value="60">1 Hrs</option>
+        <option value="180">3 Hrs</option>
+      </select>
+      <% } %>
+      <input type="hidden" id="conversation_id" name="conversation_id" value="<%= (resultset.length==1 ? resultset[0].conversation_id : 0) %>">
+      
+      <!-- Modal footer -->
+      <div class="modal-footer" style="border:none;">
+        <button type="button" class="btn btn-danger block" id="save_conversation_key" style="height: 48px;">Submit</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!--/* 24-04-2018 End */-->
+<!--/30 May / -->
+
+  <div class="modal fade" id="verify">
+    <div class="modal-dialog">
+      <div class="modal-content" style="position: absolute; top:100px;">
+      
+        <!-- Modal Header -->
+        <div class="modal-header" style="border:none;">
+          <h4 class="modal-title" style="color: red;font-weight: bold;"> Do you know whom you are chatting with ?</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body" style="margin:0 20px;">
+          <form input="text" action="" name="verify" id="verify" method = "post">
+             <div class="form-group">
+                    <h6 class="modal-title" style="color: red;font-weight: bold;"> Please enter email id or phone number of your friend</h6>
+                    <input type="text" name="verification" id="verification" placeholder="Email/Phone NUmber" class="inp-detail">
+
+                    <div id="verify_error"></div>
+              </div>
+          </form>
+        </div>
+
+        <input type="hidden" id="conversation_id" name="conversation_id" value="<%= (resultset.length==1 ? resultset[0].conversation_id : 0) %>">
+        
+        <!-- Modal footer -->
+        <div class="modal-footer" style="border:none;">
+          <button type="button" class="btn btn-danger block" id="verify_sender" style="height: 48px;">Submit</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+<!--/30 May / -->
+<script type="text/javascript">
+  $(document).ready(function(){
+
+   /*$.validate({
+     form : '#send_conversation'
+   });*/
+
+   /*$.validate({
+     form : '#sec_name'
+   });*/
+   
+ });
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    my_message();
+});
+function my_message()
+{
+  var receiver_id = $('#receiver_id').val();
+    //alert(receiver_id);
+   $.ajax({
+        type:'GET',
+        url: "/messages/my_message/"+receiver_id,
+        data: '',
+        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        
+        success: function(response){
+            console.log(response);
+            if(response[0] == 'success'){
+               
+                $('#show_message').html(response[1]);
+                var last_id = $('#show_message').children().first().attr('id');
+                //alert(last_id);
+                $('#last_id').focus();
+
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log('Error: ' + error.message);
+        }
+    });
+   setTimeout("my_message()",1000);
+}
+
+
+/* 24-04-2018 Start */
+$('#send_message').click( function() {
+ 
+  var sender_id   = $('#sender_id').val();
+  var receiver_id = $('#receiver_id').val();
+  var emojionearea1 = $('#emojionearea1').val();
+  
+  if(emojionearea1 ==''){
+    $('#message_error').show();
+    $('#message_error').html('<span class="help-block form-error">Please enter message</span>');
+    return false;
+  }
+  else{
+    var len = $('#msg_length').val();
+   
+    if (len == 2  ) {
+      $('#verify').modal('show');
+    }
+    else{
+      $.ajax({
+          type:'GET',
+          url: "/messages/checkConversationKey/"+sender_id+"/"+receiver_id,
+          data: '',
+          jsonpCallback: 'callback', // this is not relevant to the POST anymore
+          
+          success: function(response){
+             
+              if(response.conversationkeyCount ==0){
+                $('#myModal').modal('show');
+                return false;
+              }
+              else{
+                 $( "#send_conversation" ).submit();
+              }
+          },
+          error: function (xhr, status, error) {
+              console.log('Error: ' + error.message);
+              return false;
+          }
+      });
+    }
+    return false;
+  }
+});$('#save_conversation_key').click( function() {
+  //alert("hey");
+  var sender_id   = $('#sender_id').val();
+  var receiver_id = $('#receiver_id').val();
+  var receiver_conversation_key = $('#receiver_conversation_key').val();
+  
+  
+  var conversation_id = $('#conversation_id').val();
+  var chat_time = $('#chat_save_time').val();
+  if(typeof chat_time == 'undefined'){
+    var chat_save_time = 0;
+  }
+  else{
+    var chat_save_time = chat_time;
+  }  
+
+  if(receiver_conversation_key=='' || receiver_conversation_key==' '){
+    $('#secret_error').show();
+    $('#secret_error').html('<span class="help-block form-error">Secret name has to be an alphanumeric value</span>');
+    return false;  
+  }
+  else{
+  
+    $.ajax({
+        type:'GET',
+        url: "/messages/addConversationKey/"+sender_id+"/"+receiver_id+"/"+receiver_conversation_key+"/"+conversation_id+"/"+chat_save_time,
+        data: '',
+        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        
+        success: function(response){
+            
+            if(response.err ==0){
+              $( "#send_conversation" ).submit();
+            }
+            else{
+              return false;
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log('Error: ' + error.message);
+            return false;
+        }
+    });
+  }
+});
+/* 24-04-2018 End */
+
+$('#verify_sender').click( function() {
+  var verification = $('#verification').val().trim();
+  var sender_id   = $('#sender_id').val();
+  var receiver_id = $('#receiver_id').val();
+    $.ajax({
+        type:'GET',
+        url: "/messages/checkConversationWith/"+verification+"/"+receiver_id,
+        data: '',
+        jsonpCallback: 'callback', // this is not relevant to the POST anymore
+        
+        success: function(response){
+           
+            if(response.result ==1){
+              $( "#send_conversation" ).submit();
+            }
+            else{
+              $('#verify_error').show();
+              $('#verify_error').html('<span class="help-block form-error">Email/Phone did not match.</span>');
+              return false;
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log('Error: ' + error.message);
+            return false;
+        }
+    });
+});
+</script>
+
+<!-- <script type="text/javascript">
+  $(document).ready(function() {
+    $("#emojionearea1").emojioneArea({
+      pickerPosition: "right",
+      tonesStyle: "bullet"
+    });
+  });
+</script>
+ -->
+
+
+
+
+
+
